@@ -20,7 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.verify.outputs.skip }}
+      date_version: ${{ steps.date.outputs.version }}
     steps:
+      - name: Set date version
+        id: date
+        run: echo "version=$(date +%Y%m%d)" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v7
         with:
           ref: ${{ github.ref_name }}
@@ -136,10 +140,24 @@ jobs:
         run: |
           cd src
           bash tools/appimage-build-script.sh
+      - name: Rename AppImage artifact
+        run: |
+          dt_ver="${{ needs.check.outputs.date_version }}"
+          case "${{ runner.arch }}" in
+            X64)   arch="x86_64" ;;
+            ARM64) arch="aarch64" ;;
+          esac
+          cd "${{ github.workspace }}/src/build"
+          for f in Darktable-*.AppImage; do
+            [ -f "$f" ] && mv "$f" "darktable-spektrafilm-${dt_ver}-${arch}.AppImage"
+          done
+          for f in Darktable-*.AppImage.zsync; do
+            [ -f "$f" ] && mv "$f" "darktable-spektrafilm-${dt_ver}-${arch}.AppImage.zsync"
+          done
       - name: Upload AppImage artifact
         uses: actions/upload-artifact@v7
         with:
-          path: ${{ github.workspace }}/src/build/Darktable-*.AppImage*
+          path: ${{ github.workspace }}/src/build/darktable-spektrafilm-*.AppImage*
           name: artifact-appimage-${{ runner.arch }}
           retention-days: 3
 
@@ -226,10 +244,18 @@ jobs:
           cp ${{ env.BUILD_DIR }}/darktable.iss ./
           iscc "darktable.iss"
           mv Output/*.exe ${{ env.BUILD_DIR }}/
+      - name: Rename Windows artifact
+        shell: bash
+        run: |
+          dt_ver="${{ needs.check.outputs.date_version }}"
+          cd "${{ env.BUILD_DIR }}"
+          for f in darktable-*.exe; do
+            [ -f "$f" ] && mv "$f" "darktable-spektrafilm-${dt_ver}-x86_64.exe"
+          done
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v7
         with:
-          path: ${{ env.BUILD_DIR }}/*.exe
+          path: ${{ env.BUILD_DIR }}/darktable-spektrafilm-*.exe
           name: artifact-windows-${{ runner.arch }}
           retention-days: 3
 
@@ -289,15 +315,21 @@ jobs:
         run: ./src/packaging/macosx/3_make_hb_darktable_package.sh
       - name: Create DMG
         run: ./src/packaging/macosx/4_make_hb_darktable_dmg.sh
-      - name: Get version info
+      - name: Rename DMG
         run: |
-          cd ${SRC_DIR}
-          echo "VERSION=$(git describe --tags --match release-* 2>/dev/null | sed 's/^release-//;s/-/+/;s/-/~/;s/rc/~rc/' || git describe --always)" >> $GITHUB_ENV
-          echo "ARCHITECTURE=$(uname -m)" >> $GITHUB_ENV
+          dt_ver="${{ needs.check.outputs.date_version }}"
+          case "${{ runner.arch }}" in
+            ARM64) arch="arm64" ;;
+            X64)   arch="x86_64" ;;
+          esac
+          cd "${{ env.INSTALL_PREFIX }}"
+          for f in darktable-*.dmg; do
+            [ -f "$f" ] && mv "$f" "darktable-spektrafilm-${dt_ver}-${arch}.dmg"
+          done
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v7
         with:
-          path: ${{ env.INSTALL_PREFIX }}/darktable-${{ env.VERSION }}-${{ env.ARCHITECTURE }}.dmg
+          path: ${{ env.INSTALL_PREFIX }}/darktable-spektrafilm-*.dmg
           name: artifact-macos-${{ runner.arch }}
           retention-days: 3
 
@@ -320,9 +352,7 @@ jobs:
           git fetch https://github.com/${{ env.SOURCE_REPO }} ${{ env.SOURCE_BRANCH }} --tags --depth=100
           SHA=$(git rev-parse FETCH_HEAD)
           echo "COMMIT_SHA=$SHA" >> $GITHUB_ENV
-          V=$(git describe --tags --match release-* --always FETCH_HEAD \
-            | sed 's/^release-//;s/-/+/;s/-/~/;s/rc/~rc/')
-          echo "VERSION=$V" >> $GITHUB_ENV
+          echo "VERSION=${{ needs.check.outputs.date_version }}" >> $GITHUB_ENV
       - name: Record artifact filenames
         id: artifacts
         run: |
