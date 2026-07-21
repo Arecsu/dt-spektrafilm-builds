@@ -20,11 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.verify.outputs.skip }}
-      date_version: ${{ steps.date.outputs.version }}
+      date_version: ${{ steps.verify.outputs.date_version }}
     steps:
-      - name: Set date version
-        id: date
-        run: echo "version=$(date +%Y%m%d)" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v7
         with:
           ref: ${{ github.ref_name }}
@@ -36,6 +33,7 @@ jobs:
         run: |
           LAST_BUILT=$(cat last-built.sha 2>/dev/null || echo "none")
           LATEST=$(git rev-parse FETCH_HEAD)
+          SHORT=$(git rev-parse --short FETCH_HEAD)
           echo "Last built: $LAST_BUILT"
           echo "Latest:     $LATEST"
           if [ "$LAST_BUILT" = "$LATEST" ]; then
@@ -43,6 +41,7 @@ jobs:
           else
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
+          echo "date_version=$(date +%Y%m%d)-${SHORT}" >> $GITHUB_OUTPUT
 
   # ============================================================
   # Linux AppImage (x86_64 + ARM64)
