@@ -416,6 +416,8 @@ jobs:
 
            Automated builds from the [spektrafilm-draft](https://github.com/${SRC}/tree/spektrafilm-draft) branch.
 
+          Come work together! Feedback, issues, anything is welcome at [discuss.pixls.us](https://discuss.pixls.us/t/spektrafilm-darktable-module-implementation-discussion/58744)
+
           > **⚠️ HIGHLY EXPERIMENTAL** — back up your darktable data dir before testing: Linux \`~/.config/darktable/\`, macOS \`~/Library/Application Support/darktable/\`, Windows \`%APPDATA%\\darktable\\\`. Use \`--library <path>\` to keep your main setup safe.
 
           **Latest version:** ${V}
@@ -447,8 +449,6 @@ jobs:
           | Windows | \`%APPDATA%\\darktable\\spektrafilm\\\` |
 
           After extracting you should see \`profiles/\` + \`pack.json\` + \`spectra_lut.f32\` inside.
-
-          Come work together! Feedback, issues, anything is welcome at [discuss.pixls.us](https://discuss.pixls.us/t/spektrafilm-darktable-module-implementation-discussion/58744)
           READMEEOF
       - name: Store last-built commit SHA
         run: |
