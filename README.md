@@ -2,7 +2,7 @@
 
  Automated builds from the [spektrafilm-draft](https://github.com/Arecsu/darktable/tree/spektrafilm-draft) branch.
 
-**Latest version:** 25f0ca0
+**Latest version:** 20260721
 
 ## Required: Film & Print Data Pack
 
@@ -20,11 +20,11 @@ After extracting you should see `profiles/` + `pack.json` + `spectra_lut.f32` in
 
 | Platform | Architecture | Download |
 |----------|-------------|----------|
-| Linux AppImage | x86_64 | [Darktable-25f0ca0401-x86_64.AppImage](https://github.com/Arecsu/dt-spektrafilm-builds/releases/download/spektrafilm-builds/Darktable-25f0ca0401-x86_64.AppImage) |
-| Linux AppImage | ARM64 | [Darktable-25f0ca0401-aarch64.AppImage](https://github.com/Arecsu/dt-spektrafilm-builds/releases/download/spektrafilm-builds/Darktable-25f0ca0401-aarch64.AppImage) |
-| Windows | x86_64 | [darktable-25f0ca0401-win64.exe](https://github.com/Arecsu/dt-spektrafilm-builds/releases/download/spektrafilm-builds/darktable-25f0ca0401-win64.exe) |
-| macOS | ARM64 (Apple Silicon) | [darktable--arm64.dmg](https://github.com/Arecsu/dt-spektrafilm-builds/releases/download/spektrafilm-builds/darktable--arm64.dmg) |
-| macOS | x86_64 (Intel) | [darktable--x86_64.dmg](https://github.com/Arecsu/dt-spektrafilm-builds/releases/download/spektrafilm-builds/darktable--x86_64.dmg) |
+| Linux AppImage | x86_64 | [darktable-spektrafilm-20260721-x86_64.AppImage](https://github.com/Arecsu/dt-spektrafilm-builds/releases/download/spektrafilm-builds/darktable-spektrafilm-20260721-x86_64.AppImage) |
+| Linux AppImage | ARM64 | [darktable-spektrafilm-20260721-aarch64.AppImage](https://github.com/Arecsu/dt-spektrafilm-builds/releases/download/spektrafilm-builds/darktable-spektrafilm-20260721-aarch64.AppImage) |
+| Windows | x86_64 | [darktable-spektrafilm-20260721-x86_64.exe](https://github.com/Arecsu/dt-spektrafilm-builds/releases/download/spektrafilm-builds/darktable-spektrafilm-20260721-x86_64.exe) |
+| macOS | ARM64 (Apple Silicon) | [darktable-spektrafilm-20260721-arm64.dmg](https://github.com/Arecsu/dt-spektrafilm-builds/releases/download/spektrafilm-builds/darktable-spektrafilm-20260721-arm64.dmg) |
+| macOS | x86_64 (Intel) | [darktable-spektrafilm-20260721-x86_64.dmg](https://github.com/Arecsu/dt-spektrafilm-builds/releases/download/spektrafilm-builds/darktable-spektrafilm-20260721-x86_64.dmg) |
 
 Come work together! Feedback, issues, anything is welcome at [discuss.pixls.us](https://discuss.pixls.us/t/spektrafilm-darktable-module-implementation-discussion/58744)
 
