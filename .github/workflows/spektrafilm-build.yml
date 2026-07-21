@@ -408,12 +408,33 @@ jobs:
           ma64f="${{ env.artifact-macos-ARM64_FILE }}"
           mx64f="${{ env.artifact-macos-X64_FILE }}"
 
+          # Get last 4 commits from source
+          COMMITS=$(git log FETCH_HEAD -4 --format="| %as | [%h](https://github.com/${SRC}/commit/%h) | %an | %s |" 2>/dev/null || true)
+
           cat > README.md << READMEEOF
           # Darktable Spektrafilm — Builds
 
            Automated builds from the [spektrafilm-draft](https://github.com/${SRC}/tree/spektrafilm-draft) branch.
 
+          > **⚠️ HIGHLY EXPERIMENTAL** — back up your darktable data dir before testing: Linux \`~/.config/darktable/\`, macOS \`~/Library/Application Support/darktable/\`, Windows \`%APPDATA%\\darktable\\\`. Use \`--library <path>\` to keep your main setup safe.
+
           **Latest version:** ${V}
+
+          ## Latest Builds
+
+          | Platform | Architecture | Download |
+          |----------|-------------|----------|
+          | Linux AppImage | x86_64 | [${ax64f}](${BASE}/${ax64f}) |
+          | Linux AppImage | ARM64 | [${aa64f}](${BASE}/${aa64f}) |
+          | Windows | x86_64 | [${wx64f}](${BASE}/${wx64f}) |
+          | macOS | ARM64 (Apple Silicon) | [${ma64f}](${BASE}/${ma64f}) |
+          | macOS | x86_64 (Intel) | [${mx64f}](${BASE}/${mx64f}) |
+
+          ## Recent Commits
+
+          | Date | Commit | Author | Message |
+          |------|--------|--------|---------|
+          ${COMMITS}
 
           ## Required: Film & Print Data Pack
 
@@ -427,19 +448,7 @@ jobs:
 
           After extracting you should see \`profiles/\` + \`pack.json\` + \`spectra_lut.f32\` inside.
 
-          ## Latest Builds
-
-          | Platform | Architecture | Download |
-          |----------|-------------|----------|
-          | Linux AppImage | x86_64 | [${ax64f}](${BASE}/${ax64f}) |
-          | Linux AppImage | ARM64 | [${aa64f}](${BASE}/${aa64f}) |
-          | Windows | x86_64 | [${wx64f}](${BASE}/${wx64f}) |
-          | macOS | ARM64 (Apple Silicon) | [${ma64f}](${BASE}/${ma64f}) |
-          | macOS | x86_64 (Intel) | [${mx64f}](${BASE}/${mx64f}) |
-
           Come work together! Feedback, issues, anything is welcome at [discuss.pixls.us](https://discuss.pixls.us/t/spektrafilm-darktable-module-implementation-discussion/58744)
-
-          > **⚠️ HIGHLY EXPERIMENTAL** — back up your darktable data dir before testing: Linux \`~/.config/darktable/\`, macOS \`~/Library/Application Support/darktable/\`, Windows \`%APPDATA%\\darktable\\\`. Use \`--library <path>\` to keep your main setup safe.
           READMEEOF
       - name: Store last-built commit SHA
         run: |
