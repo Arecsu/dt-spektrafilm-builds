@@ -29,12 +29,22 @@ Come work together! Feedback, issues, anything is welcome at [discuss.pixls.us](
 
 ## Required: Film & Print Data Pack
 
-Download the [spektrafilm-data-pack.zip](https://github.com/Arecsu/dt-spektrafilm-builds/raw/main/spektrafilm-data-pack.zip) and extract to your darktable config dir:
+Download the [spektrafilm-data-pack.zip](https://github.com/Arecsu/dt-spektrafilm-builds/raw/main/spektrafilm-data-pack.zip) and extract it **anywhere** — you'll get a `spektrafilm/` folder. Then move or copy that folder into your darktable config directory:
 
-| Platform | Extract to |
-|----------|-----------|
-| Linux | `~/.config/darktable/spektrafilm/` |
-| macOS | `~/Library/Application Support/darktable/spektrafilm/` |
-| Windows | `%APPDATA%\darktable\spektrafilm\` |
+| Platform | Darktable config directory |
+|----------|---------------------------|
+| Linux | `~/.config/darktable/` |
+| macOS | `~/Library/Application Support/darktable/` |
+| Windows | `%APPDATA%\darktable\` |
 
-After extracting you should see `profiles/` + `pack.json` + `spectra_lut.f32` inside.
+The final structure should look like this:
+
+```
+spektrafilm/
+├── pack.json
+├── spectra_lut.f32
+└── profiles/
+    ├── kodak_portra_400.json
+    ├── fujifilm_velvia_100.json
+    └── ...
+```
