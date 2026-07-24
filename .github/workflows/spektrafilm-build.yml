@@ -235,6 +235,14 @@ jobs:
           magick "${SRC_DIR}"/data/pixmaps/256x256/darktable.png \
             -define icon:auto-resize="256,128,64,48,32,16" \
             "${INSTALL_PREFIX}"/dt_logo_multiresolution.ico
+      - name: Patch Inno Setup script for Spektrafilm
+        shell: bash
+        run: |
+          # Use a unique AppId so the installer doesn't collide with official darktable
+          # This changes: AppId=darktable[-dev] → AppId=darktable-spektrafilm[-dev]
+          # and install dir from C:\Program Files\darktable[-dev] → C:\Program Files\darktable-spektrafilm[-dev]
+          sed -i 's/^#define MyAppName "darktable"/#define MyAppName "darktable-spektrafilm"/' \
+            "${{ env.BUILD_DIR }}/darktable.iss"
       - name: Create Inno Setup installer
         shell: pwsh
         run: |
